@@ -1,0 +1,5 @@
+/storage/*.data
+config.yaml
+/log/*.log
+*.log
+/.idea
