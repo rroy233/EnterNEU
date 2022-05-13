@@ -5,6 +5,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/rroy233/EnterNEU/configs"
 	"github.com/rroy233/EnterNEU/utils"
+	"time"
 )
 
 func formHandler(update *tgbotapi.Update) {
@@ -48,6 +49,7 @@ func formHandler(update *tgbotapi.Update) {
 		clearKeyboard(update, "开始")
 		_ = session.save()
 		sendPlainText(update, "已为您随机生成秘钥:\n"+session.Form.Key)
+		time.Sleep(200 * time.Millisecond)
 		hint := "请输入您的姓名(格式:孙*川):"
 		sendPlainText(update, hint, entityBold(hint, "姓名"))
 	case stepFormName:
