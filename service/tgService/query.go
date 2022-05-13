@@ -56,12 +56,17 @@ func queryGetVideo(update *tgbotapi.Update) {
 	addToSendQueue(edit)
 
 	//callback
-	err := callBack(update.CallbackQuery.ID, "正在发送中")
+	err := callBack(update.CallbackQuery.ID, "ok")
 	if err != nil {
 		logger.Error.Println(loggerPrefix + err.Error())
 	}
 
-	//发送视频
-	msg := tgbotapi.NewVideo(update.CallbackQuery.Message.Chat.ID, tgbotapi.FileID("BAACAgUAAxkBAAIBtmJ986nE7bcn7JPDAXGkKVjoV7r5AAIRBQACUg3wV7GMbzVim7EgJAQ"))
+	//发送
+	text := "Shadowrocket配置视频教程:\n点我"
+	msg := tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID, text)
+	msg.Entities = []tgbotapi.MessageEntity{
+		entityTextLink(text, "点我", "https://upload.enterneu.icu/enterNEU_ios_compressed.mp4"),
+	}
 	addToSendQueue(msg)
+	return
 }
