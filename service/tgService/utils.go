@@ -18,23 +18,19 @@ func sendPlainText(update *tgbotapi.Update, text string, entity ...tgbotapi.Mess
 		return
 	}
 	var msg tgbotapi.MessageConfig
-	var err error
 	if update.Message != nil {
 		msg = tgbotapi.NewMessage(update.Message.Chat.ID, text)
 		msg.ReplyToMessageID = update.Message.MessageID
 		if entity != nil {
 			msg.Entities = entity
 		}
-		_, err = bot.Send(msg)
+		addToSendQueue(msg)
 	} else if update.CallbackQuery != nil || update.CallbackQuery.Message != nil {
 		msg = tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID, text)
 		if entity != nil {
 			msg.Entities = entity
 		}
-		_, err = bot.Send(msg)
-	}
-	if err != nil {
-		logger.Error.Println(loggerPrefix + "[SendPlainText]" + err.Error())
+		addToSendQueue(msg)
 	}
 }
 

@@ -195,6 +195,8 @@ func (fs *tgFormSession) createEcode() (string, error) {
 		logger.Error.Println(loggerPrefix + err.Error())
 	}
 
+	fs.Token = token
+
 	return token, err
 }
 
@@ -231,15 +233,7 @@ func (fs *tgFormSession) storeImg(update *tgbotapi.Update) error {
 
 func (fs *tgFormSession) sendTicketMsg(update *tgbotapi.Update, token string) {
 
-	keyboard := tgbotapi.NewInlineKeyboardMarkup(
-		tgbotapi.NewInlineKeyboardRow(
-			tgbotapi.NewInlineKeyboardButtonURL("e码通页面", fmt.Sprintf("%s/%s/%s", configs.Get().General.BaseUrl, token, fs.Form.Key)),
-			tgbotapi.NewInlineKeyboardButtonURL("管理面板(web)", fmt.Sprintf("%s/#/status/%s/%s", configs.Get().General.BaseUrl, token, fs.Form.Key)),
-		),
-		tgbotapi.NewInlineKeyboardRow(
-			tgbotapi.NewInlineKeyboardButtonData("删除", fmt.Sprintf("del#%s#%s", token, fs.Form.Key)),
-		),
-	)
+	keyboard := fs.getTicketInlineKeyboard()
 
 	text := fmt.Sprintf("%s\n%s\n%s\n%s",
 		"#EnterNEU凭证\n",
@@ -259,4 +253,31 @@ func (fs *tgFormSession) sendTicketMsg(update *tgbotapi.Update, token string) {
 	}
 
 	return
+}
+
+func (fs *tgFormSession) getTicketInlineKeyboard() tgbotapi.InlineKeyboardMarkup {
+	return tgbotapi.NewInlineKeyboardMarkup(
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonURL("e码通页面", fmt.Sprintf("%s/%s/%s", configs.Get().General.BaseUrl, fs.Token, fs.Form.Key)),
+			tgbotapi.NewInlineKeyboardButtonURL("管理面板(web)", fmt.Sprintf("%s/#/status/%s/%s", configs.Get().General.BaseUrl, fs.Token, fs.Form.Key)),
+		),
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("Shadowrocket视频教程", fmt.Sprintf("get_video#%s#%s", fs.Token, fs.Form.Key)),
+		),
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("删除", fmt.Sprintf("del#%s#%s", fs.Token, fs.Form.Key)),
+		),
+	)
+}
+
+func getTicketInlineKeyboardNoVideo(token, key string) tgbotapi.InlineKeyboardMarkup {
+	return tgbotapi.NewInlineKeyboardMarkup(
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonURL("e码通页面", fmt.Sprintf("%s/%s/%s", configs.Get().General.BaseUrl, token, key)),
+			tgbotapi.NewInlineKeyboardButtonURL("管理面板(web)", fmt.Sprintf("%s/#/status/%s/%s", configs.Get().General.BaseUrl, token, key)),
+		),
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("删除", fmt.Sprintf("del#%s#%s", token, key)),
+		),
+	)
 }
