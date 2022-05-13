@@ -16,10 +16,11 @@ type ConfigStruct struct {
 		Md5Salt    string `yaml:"md5Salt"`
 	} `yaml:"general"`
 	TGService struct {
-		Enabled   bool   `yaml:"enabled"`
-		BotToken  string `yaml:"botToken"`
-		AdminUID  int64  `yaml:"adminUID"`
-		WorkerNum int    `yaml:"workerNum"`
+		Enabled         bool   `yaml:"enabled"`
+		BotToken        string `yaml:"botToken"`
+		AdminUID        int64  `yaml:"adminUID"`
+		HandleWorkerNum int    `yaml:"handleWorkerNum"`
+		MsgSenderNum    int    `yaml:"msgSenderNum"`
 	} `yaml:"tgService"`
 	Redis struct {
 		Host     string `yaml:"host"`
