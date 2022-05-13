@@ -16,6 +16,7 @@ func InitSender(senderNum int) {
 
 func addToSendQueue(msg tgbotapi.Chattable) {
 	msgQueue <- msg
+	return
 }
 
 func sender() {
