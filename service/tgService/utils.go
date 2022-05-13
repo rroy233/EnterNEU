@@ -43,17 +43,13 @@ func sendSticker(update *tgbotapi.Update, fileID string) {
 		return
 	}
 	var msg tgbotapi.StickerConfig
-	var err error
 	if update.Message != nil {
 		msg = tgbotapi.NewSticker(update.Message.Chat.ID, tgbotapi.FileID(fileID))
 		msg.ReplyToMessageID = update.Message.MessageID
-		_, err = bot.Send(msg)
+		addToSendQueue(msg)
 	} else if update.CallbackQuery != nil || update.CallbackQuery.Message != nil {
 		msg = tgbotapi.NewSticker(update.CallbackQuery.Message.Chat.ID, tgbotapi.FileID(fileID))
-		_, err = bot.Send(msg)
-	}
-	if err != nil {
-		logger.Error.Println(loggerPrefix + "[sendSticker]" + err.Error())
+		addToSendQueue(msg)
 	}
 }
 
@@ -62,7 +58,6 @@ func sendPlainTextWithKeyboard(update *tgbotapi.Update, text string, keyboard *t
 		return
 	}
 	var msg tgbotapi.MessageConfig
-	var err error
 	if update.Message != nil {
 		msg = tgbotapi.NewMessage(update.Message.Chat.ID, text)
 		msg.ReplyToMessageID = update.Message.MessageID
@@ -70,17 +65,14 @@ func sendPlainTextWithKeyboard(update *tgbotapi.Update, text string, keyboard *t
 		if entity != nil {
 			msg.Entities = entity
 		}
-		_, err = bot.Send(msg)
+		addToSendQueue(msg)
 	} else if update.CallbackQuery != nil || update.CallbackQuery.Message != nil {
 		msg = tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID, text)
 		msg.ReplyMarkup = *keyboard
 		if entity != nil {
 			msg.Entities = entity
 		}
-		_, err = bot.Send(msg)
-	}
-	if err != nil {
-		logger.Error.Println(loggerPrefix + "[SendPlainText]" + err.Error())
+		addToSendQueue(msg)
 	}
 }
 

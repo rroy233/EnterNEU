@@ -6,6 +6,7 @@ import (
 	"github.com/rroy233/EnterNEU/configs"
 	"github.com/rroy233/EnterNEU/databases"
 	"github.com/rroy233/EnterNEU/logger"
+	"go.uber.org/ratelimit"
 )
 
 var loggerPrefix = "[tgService]"
@@ -16,13 +17,14 @@ var cancel context.CancelFunc
 var stopCtx context.Context
 var cancelCh chan int
 var WorkerNum int
+var rl ratelimit.Limiter
 
 func InitTgService() {
 	if configs.Get() == nil {
 		logger.FATAL.Fatalln(loggerPrefix + "配置文件未加载")
 	}
 
-	WorkerNum = configs.Get().TGService.WorkerNum
+	WorkerNum = configs.Get().TGService.HandleWorkerNum
 
 	var err error
 	bot, err = tgbotapi.NewBotAPI(configs.Get().TGService.BotToken)
@@ -33,6 +35,12 @@ func InitTgService() {
 	//初始化许可名单
 	databases.InitTGAllow()
 
+	//初始化rate limiter
+	//TG官方对message发送频率有限制
+	//详见:https://core.telegram.org/bots/faq#broadcasting-to-users
+	rl = ratelimit.New(30)
+	InitSender(configs.Get().TGService.MsgSenderNum)
+
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 	updates := bot.GetUpdatesChan(u)
@@ -42,7 +50,7 @@ func InitTgService() {
 		go worker(stopCtx, updates, cancelCh)
 	}
 
-	logger.Info.Printf(loggerPrefix+"TG机器人初始化成功 %s，worker数%d", bot.Self.UserName, WorkerNum)
+	logger.Info.Printf(loggerPrefix+"TG机器人初始化成功 %s，HandleWorker数%d，MsgSender数%d\n", bot.Self.UserName, WorkerNum, configs.Get().TGService.MsgSenderNum)
 	Status = 1
 }
 

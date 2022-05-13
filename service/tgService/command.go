@@ -66,10 +66,7 @@ func commandNew(update *tgbotapi.Update) {
 		entityTextLink(text, "点击查看", "https://telegra.ph/EnterNEU%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3-05-10"),
 	}
 	msg.ReplyMarkup = keybord
-	_, err = bot.Send(msg)
-	if err != nil {
-		logger.Error.Println(loggerPrefix + "发送失败：" + err.Error())
-	}
+	addToSendQueue(msg)
 	return
 }
 
@@ -113,9 +110,7 @@ func commandAddPermission(update *tgbotapi.Update) {
 		"用户%s(@%s)已批准您使用本bot\n\n您也可以使用 /add 命令批准别的用户。\n注意,请严格按照授权原则进行使用。",
 		update.Message.From.FirstName+update.Message.From.LastName,
 		update.Message.From.UserName))
-	if _, err = bot.Send(msg); err != nil {
-		logger.Error.Println(loggerPrefix + "给用户推送通知失败:" + err.Error())
-	}
+	addToSendQueue(msg)
 
 	//加入许可名单
 	databases.GetTGAllow().Put(uid)
@@ -178,9 +173,7 @@ func commandRemovePermission(update *tgbotapi.Update) {
 			"用户%s(@%s)已移除您使用本bot的权限",
 			update.Message.From.FirstName+update.Message.From.LastName,
 			update.Message.From.UserName))
-		if _, err = bot.Send(msg); err != nil {
-			logger.Error.Println(loggerPrefix + "给用户推送通知失败:" + err.Error())
-		}
+		addToSendQueue(msg)
 		//回复操作者
 		sendPlainText(update, fmt.Sprintf("移除UID:%d成功", uid))
 	}

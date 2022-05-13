@@ -9,7 +9,8 @@ tgService:
   enabled: false
   botToken: ""
   adminUID: 0
-  workerNum: 3
+  handleWorkerNum: 1
+  msgSenderNum: 5
 
 redis:
   host: "localhost"
