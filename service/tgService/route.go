@@ -101,6 +101,8 @@ func router(update tgbotapi.Update) {
 			queryUpload(&update)
 		case "del":
 			queryDel(&update)
+		case "get_video":
+			queryGetVideo(&update)
 		default:
 			if err := callBackWithAlert(update.CallbackQuery.ID, "操作不存在"); err != nil {
 				logger.Error.Println(loggerPrefix+"[route]default发送CallBackWithAlert失败", err)
