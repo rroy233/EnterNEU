@@ -70,4 +70,4 @@ https://t.me/enterNEU_bot
 
 10. 然后按左上角的对号保存。回到小火箭的首页，全局路由选择“配置”，可点击上面的开关进行开启，这时系统就能够将那个域名重定向到通行许可的地址了。
 
-10. (视频教程：https://streamja.com/QONJ4)
+11. (视频教程：https://streamja.com/QONJ4)

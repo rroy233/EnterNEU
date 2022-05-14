@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const noPermissionText = "您没有使用的权限!\n如果您也是东大的学生，您可以向已被授权的东大学生索要授权。"
+const noPermissionText = "您没有使用的权限!\n如果您是东大的学生，您可以向已被授权的东大学生索要授权。"
 
 func router(update tgbotapi.Update) {
 	//debug
