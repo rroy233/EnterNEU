@@ -1,3 +1,28 @@
+<p align="center">
+    <img src="https://socialify.git.ci/rroy233/EnterNEU/image?description=1&font=Source%20Code%20Pro&language=1&name=1&owner=1&pattern=Circuit%20Board&theme=Light">
+</p>
+
+
+<p align="center">
+   <a href="https://github.com/rroy233/EnterNEU">
+      <img alt="GitHub go.mod Go version" src="https://img.shields.io/github/go-mod/go-version/rroy233/EnterNEU?style=flat-square">
+   </a>
+   <a href="https://github.com/rroy233/EnterNEU/releases">
+      <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/rroy233/EnterNEU?style=flat-square">
+   </a>
+   <a href="https://github.com/rroy233/EnterNEU/blob/main/LICENSE">
+      <img alt="GitHub license" src="https://img.shields.io/github/license/rroy233/EnterNEU?style=flat-square">
+   </a>
+   <a href="https://github.com/rroy233/EnterNEU">
+      <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/rroy233/EnterNEU/Go?style=flat-square">
+   </a>
+   <a href="https://github.com/rroy233/EnterNEU/commits/main">
+      <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/rroy233/EnterNEU?style=flat-square">
+   </a>
+   <a href="https://enterneu.icu">
+      <img alt="Demo" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fupload.enterneu.icu%2Fshields.json">
+   </a>
+</p>
 
 
 ### 功能
@@ -26,17 +51,18 @@
 
 #### 步骤
 
-1. 获取可执行文件
+1. 克隆仓库
 
-   1. 克隆仓库
+   ```shell
+   git clone https://github.com/rroy233/EnterNEU.git
+   ```
+   
+2. 获取可执行文件
+
+   1. 自行编译
 
       ```shell
-      git clone https://github.com/rroy233/EnterNEU.git
-      ```
-
-   2. 自行编译或前往release下载
-
-      ```shell
+      cd EnterNEU/
       # 自行编译
       # go版本要求：go1.17
       go build -o enterneu
@@ -44,9 +70,11 @@
       make
       ```
 
+   2. 前往release下载
+
       下载已编译的[可执行文件](https://github.com/rroy233/EnterNEU/releases)，重新命名为`enterneu`，放于项目文件夹内。
 
-2. 编辑config.yaml
+3. 编辑config.yaml
 
    ```shell
    # 新建config.yaml,编辑内容
@@ -54,7 +82,7 @@
    vim config.yaml
    ```
 
-3. 运行
+4. 运行
 
    ```shell
    ./enterneu
@@ -62,7 +90,7 @@
    bash run.sh
    ```
 
-4. 访问`http://localhost:8994`使用。
+5. 访问`http://localhost:8994`使用。
 
    可以使用nginx进行反代
 
