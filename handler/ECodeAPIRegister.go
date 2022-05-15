@@ -58,7 +58,7 @@ func ECodeAPIRegister(c *gin.Context) {
 		t.passColor = e.data[0].attributes.ruleset.color
 	*/
 	color := "#509674"
-	codeType := "5"
+	codeType := store.Entrance.CodeType
 	ecodeConfigs, err := configs.GetECodeConst()
 	if err == nil {
 		id, _ := strconv.Atoi(store.Entrance.CodeType)
