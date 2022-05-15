@@ -32,10 +32,6 @@ type StoreStruct struct {
 		CodeType      string `json:"CodeType"`
 		ActualVehicle string `json:"actualVehicle"`
 	}
-	TgInfo struct {
-		CreatedInTG bool  `json:"CreatedInTG"`
-		UID         int64 `json:"UID"`
-	} `json:"TgInfo"`
 	ExpTime int64 `json:"ExpTime"`
 }
 
