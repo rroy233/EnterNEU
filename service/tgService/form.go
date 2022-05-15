@@ -4,6 +4,7 @@ import (
 	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/rroy233/EnterNEU/configs"
+	"github.com/rroy233/EnterNEU/logger"
 	"github.com/rroy233/EnterNEU/utils"
 	"time"
 )
@@ -72,7 +73,17 @@ func formHandler(update *tgbotapi.Update) {
 		hint := "请选择(小键盘上的)提示文本:"
 		sendPlainTextWithKeyboard(update, hint, kb, entityBold(hint, "提示文本"))
 	case stepFormCodeType:
-		session.Form.CodeType = text
+		ecc, err := configs.GetECodeConst()
+		if err != nil {
+			logger.Error.Println(loggerPrefix + "读取e-code配置文件失败:" + err.Error())
+			sendPlainText(update, "读取e-code配置文件失败")
+			return
+		}
+		if ecc.CodeTypeIDByText[text] == "" {
+			sendPlainText(update, "提示文本无效,请重新选择", entityBold("提示文本无效,请重新选择", "提示文本"))
+			return
+		}
+		session.Form.CodeType = ecc.CodeTypeIDByText[text]
 		session.setStep(stepFormActualVehicle)
 		_ = session.save()
 		hint := "请选择(小键盘上的)方向:"
