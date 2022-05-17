@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://socialify.git.ci/rroy233/EnterNEU/image?description=1&font=Source%20Code%20Pro&language=1&name=1&owner=1&pattern=Circuit%20Board&theme=Light">
+    <img src="https://socialify.git.ci/rroy233/EnterNEU/image?description=1&descriptionEditable=%E4%B8%9CB%E5%A4%A7%E5%AD%A6e%E7%A0%81%E9%80%9A%E7%94%9F%E6%88%90(%E5%90%8E%E7%AB%AF)&language=1&logo=https%3A%2F%2Fs2.loli.net%2F2022%2F05%2F05%2FDx8lpyk7mcuZ3Tr.png&name=1&owner=1&pattern=Circuit%20Board&theme=Light">
 </p>
 
 
