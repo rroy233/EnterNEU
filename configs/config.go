@@ -28,6 +28,11 @@ type ConfigStruct struct {
 		Password string `yaml:"password"`
 		DB       int    `yaml:"DB"`
 	} `yaml:"redis"`
+	StatisticsReport struct {
+		V651La    bool   `yaml:"v6_51_la"`
+		V651LaJs1 string `yaml:"v6_51_la_js1"`
+		V651LaJs2 string `yaml:"v6_51_la_js2"`
+	} `yaml:"statistics_report"`
 }
 
 var config *ConfigStruct
