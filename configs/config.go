@@ -38,6 +38,7 @@ type ConfigStruct struct {
 var config *ConfigStruct
 
 func InitConfig(path string) {
+	config = new(ConfigStruct)
 	confFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Fatalln("配置文件加载失败！", err)

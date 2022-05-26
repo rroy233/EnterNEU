@@ -63,7 +63,6 @@ func main() {
 	}
 
 	//初始化tg服务
-	fmt.Println(configs.Get())
 	if configs.Get().TGService.Enabled == true {
 		tgService.InitTgService()
 	}
