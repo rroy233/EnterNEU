@@ -25,6 +25,15 @@ func InitCronService() error {
 		logger.Info.Println("[定时任务][成功]添加cronClean成功")
 	}
 
+	//更新配置文件
+	//每3分钟
+	_, err = crontab.AddFunc("@every 3m", cronUpdateConfig)
+	if err != nil {
+		return errors.New("[定时任务][异常]添加cronUpdateConfig失败:" + err.Error())
+	} else {
+		logger.Info.Println("[定时任务][成功]添加cronUpdateConfig成功")
+	}
+
 	crontab.Start()
 
 	return err
