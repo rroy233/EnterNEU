@@ -10,6 +10,7 @@ import (
 type ConfigStruct struct {
 	General struct {
 		Production bool   `yaml:"production"`
+		WebEnabled bool   `yaml:"web_enabled"`
 		BaseUrl    string `yaml:"baseUrl"`
 		ListenPort string `yaml:"listenPort"`
 		AesIv      string `yaml:"aesIv"`
