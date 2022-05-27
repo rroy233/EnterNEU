@@ -43,7 +43,7 @@ func router(update tgbotapi.Update) {
 
 	//判断是否为群组
 	if update.Message != nil && update.Message.Chat.IsGroup() == true {
-		sendPlainText(&update, "暂时不支持群组")
+		sendPlainText(&update, "不支持群组")
 		return
 	}
 
