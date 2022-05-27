@@ -96,6 +96,24 @@
 
 
 
+#### TelegramBot命令列表
+
+请使用[BotFather](https://t.me/BotFather)进行设置
+
+```
+help - 查看帮助[私聊]
+new - 开始创建凭证[私聊]
+cancel - 取消创建凭证[私聊]
+clear - 清除小键盘[私聊]
+add - 给予用户使用权限[私聊]
+remove - 撤销用户使用权限[私聊][管理员]
+list - 获取已授权名单[私聊][管理员]
+```
+
+
+
+
+
 ### License
 
 GPL-3.0 license
