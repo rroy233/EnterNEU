@@ -19,6 +19,7 @@ type ConfigStruct struct {
 	TGService struct {
 		Enabled         bool   `yaml:"enabled"`
 		BotToken        string `yaml:"botToken"`
+		BotUserName     string `yaml:"botUserName"`
 		AdminUID        int64  `yaml:"adminUID"`
 		HandleWorkerNum int    `yaml:"handleWorkerNum"`
 		MsgSenderNum    int    `yaml:"msgSenderNum"`
