@@ -28,7 +28,7 @@
 
    凭证生成页面
 
-2. e码通页面入口`http://enterneu.icu/{token}/{key}`
+2. e码通页面入口`https://enterneu.icu/{token}/{key}`
 
    **请保存此地址，e码通页面的唯一入口**
 
@@ -36,13 +36,15 @@
 
    注意：请勿保存`/ecode/#/codeRecord?entrance_id=xxxx`页面的地址，直接访问该地址是无效的。
 
-3. 凭证管理页面`http://enterneu.icu/{token}/{key}/status`
+3. 凭证管理页面`https://enterneu.icu/{token}/{key}/status`
 
    **请保存此地址，用于管理您的凭证**
 
 ### Telegram Bot
 
-https://t.me/enterNEU_bot
+[//]: # "your own bot instance"
+
+https://t.me/enterNEU_bot (官方实例)
 
 ### Shadowrocket配置方法(iOS)
 
@@ -71,3 +73,5 @@ https://t.me/enterNEU_bot
 10. 然后按左上角的对号保存。回到小火箭的首页，全局路由选择“配置”，可点击上面的开关进行开启，这时系统就能够将那个域名重定向到通行许可的地址了。
 
 11. (视频教程：https://streamja.com/QONJ4)
+
+[//]: # "copy right"
