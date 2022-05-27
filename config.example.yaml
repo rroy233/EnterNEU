@@ -1,5 +1,6 @@
 general:
   production: false
+  web_enabled: true
   baseUrl: "http://localhost:8994"
   listenPort: "8994"
   aesIv: "16byteaesiv11111"
