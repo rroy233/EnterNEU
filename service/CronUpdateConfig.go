@@ -23,6 +23,7 @@ func cronUpdateConfig() {
 		if bytes.Equal(fileData, oldConfig) == false {
 			configs.InitConfig(configPath)
 			logger.Info.Println(loggerPrefix + "已自动更新配置文件")
+			oldConfig = fileData
 			return
 		}
 	}

@@ -24,7 +24,7 @@ func main() {
 	logger.New(configs.Get().General.Production)
 
 	//gin日志输出
-	logFile, err := os.OpenFile("./log/gin.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	logFile, err := os.OpenFile("./storage/log/gin.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		logger.FATAL.Fatalln(err)
 	}

@@ -29,9 +29,9 @@ func New(production bool) {
 	ProductionMode = production
 
 	//check log dir
-	_, err := os.Stat("./log")
+	_, err := os.Stat("./storage/log")
 	if os.IsNotExist(err) {
-		err = os.Mkdir("./log/", 0755)
+		err = os.Mkdir("./storage/log/", 0755)
 		if err != nil {
 			log.Fatalln("目录文件夹log创建失败!")
 		}
@@ -70,7 +70,7 @@ func setNewLogger() {
 	var err error
 
 	//日志输出文件
-	logFile, err = os.OpenFile("./log/"+nowDate+".log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	logFile, err = os.OpenFile("./storage/log/"+nowDate+".log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalln("Faild to open error logger file:", err)
 	}
