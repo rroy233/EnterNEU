@@ -15,6 +15,7 @@ type RespAPIConfig struct {
 		CodeType      []CodeConfigItems `json:"codeType"`
 		ActualVehicle []CodeConfigItems `json:"actualVehicle"`
 		ExpTime       []CodeConfigItems `json:"expTime"`
+		Announcement  string            `json:"announcement"`
 	} `json:"data"`
 }
 
@@ -52,6 +53,7 @@ func APIConfigHandler(c *gin.Context) {
 		{ConfigName: "2", ConfigValue: "3天"},
 		{ConfigName: "3", ConfigValue: "一周"},
 	}
+	resp.Data.Announcement = ecodeConfig.Announcement
 
 	c.JSON(200, resp)
 	return
