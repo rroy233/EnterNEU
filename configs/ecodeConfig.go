@@ -9,6 +9,7 @@ import (
 type eCodeConst struct {
 	Colors           []string `json:"colors"`
 	CodeTypes        []string `json:"codeTypes"`
+	Announcement     string   `json:"announcement"`
 	CodeTypeIDByText map[string]string
 }
 
