@@ -34,7 +34,7 @@ func TokenShadowrocketHandler(c *gin.Context) {
 	}
 
 	fileName := fmt.Sprintf("%s_%s过期.conf", token, time.Unix(store.ExpTime, 0).Format("01月02日15:04"))
-	Url := fmt.Sprintf("%s/%s/%s?_=", utils.GetAPIBaseUrl(c), token, key)
+	Url := fmt.Sprintf("%s/api/%s/%s?_=", utils.GetAPIBaseUrl(c), token, key)
 
 	//替换
 	fileData := strings.Replace(string(confFile), "{{url_replace}}", Url, -1)

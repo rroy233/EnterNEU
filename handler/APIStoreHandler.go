@@ -31,12 +31,7 @@ type ApiStoreReq struct {
 type ApiStoreResp struct {
 	Status int `json:"status"`
 	Data   struct {
-		Token     string `json:"token"`
-		CheckUrl  string `json:"checkUrl"`
-		StatusUrl string `json:"statusUrl"`
-		VueUrl    string `json:"vueUrl"`
-		DeleteUrl string `json:"deleteUrl"`
-		ExpTime   string `json:"expTime"`
+		VueUrl string `json:"vueUrl"`
 	} `json:"data"`
 }
 
@@ -71,8 +66,6 @@ func APIStoreHandler(c *gin.Context) {
 		return
 	}
 
-	expTime := time.Now().Add(expDuration)
-
 	helper := databases.NewHelper(form.Key)
 	token, err := helper.CreateECode(form.Name, form.StuID, form.EntranceName, form.Key, "", form.CodeType, form.ActualVehicle, expDuration)
 	if err != nil {
@@ -82,13 +75,7 @@ func APIStoreHandler(c *gin.Context) {
 
 	resp := new(ApiStoreResp)
 	resp.Status = 0
-	resp.Data.Token = token
-	resp.Data.ExpTime = expTime.Format("2006-01-02 15:04:05")
-	urlPrefix := fmt.Sprintf("%s/%s/%s", configs.Get().General.BaseUrl, token, form.Key)
 	resp.Data.VueUrl = fmt.Sprintf("/status/%s/%s", token, form.Key)
-	resp.Data.CheckUrl = urlPrefix
-	resp.Data.StatusUrl = urlPrefix + "/status"
-	resp.Data.DeleteUrl = urlPrefix + "/delete"
 
 	c.JSON(200, resp)
 	return

@@ -26,12 +26,11 @@ func Register(engine *gin.Engine) {
 	engine.GET("/", handler.IndexHandler)
 	engine.Static("/js", "./assets/enterneu/js")
 	engine.Static("/css", "./assets/enterneu/css")
-	engine.GET("/:token/:key", handler.TokenCheckHandler)
-	engine.GET("/:token/:key/delete", handler.TokenDeleteHandler)
-	engine.GET("/:token/:key/status", handler.TokenStatusHandler)
-	engine.GET("/:token/:key/shadowrocket", handler.TokenShadowrocketHandler)
 	apiGroup := engine.Group("/api")
 	{
+		apiGroup.GET("/:token/:key", handler.TokenCheckHandler)
+		apiGroup.GET("/:token/:key/shadowrocket", handler.TokenShadowrocketHandler)
+
 		//头像预览
 		apiGroup.GET("/viewImage", handler.APIViewImageHandler)
 

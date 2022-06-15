@@ -69,7 +69,7 @@ func Sha256Hex(data []byte) string {
 
 func GetHostname(c *gin.Context) string {
 	base := ""
-	if configs.Get().Proxy.Enabled == true || c.GetHeader("X-API-Via") == configs.Get().Proxy.HeaderKey {
+	if configs.Get().Proxy.Enabled == true && c.GetHeader("X-API-Via") == configs.Get().Proxy.HeaderKey {
 		base = configs.Get().Proxy.ApiBaseUrl
 	} else {
 		base = configs.Get().General.BaseUrl
@@ -94,14 +94,14 @@ func GetCookieSecure() bool {
 }
 
 func GetAPIBaseUrl(c *gin.Context) string {
-	if configs.Get().Proxy.Enabled == true || c.GetHeader("X-API-Via") == configs.Get().Proxy.HeaderKey {
+	if configs.Get().Proxy.Enabled == true && c.GetHeader("X-API-Via") == configs.Get().Proxy.HeaderKey {
 		return configs.Get().Proxy.ApiBaseUrl
 	}
 	return configs.Get().General.BaseUrl
 }
 
 func GetFrontEndBaseUrl(c *gin.Context) string {
-	if configs.Get().Proxy.Enabled == true || c.GetHeader("X-API-Via") == configs.Get().Proxy.HeaderKey {
+	if configs.Get().Proxy.Enabled == true && c.GetHeader("X-API-Via") == configs.Get().Proxy.HeaderKey {
 		return configs.Get().Proxy.FrontendBaseUrl
 	}
 	return configs.Get().General.BaseUrl
