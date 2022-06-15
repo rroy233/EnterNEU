@@ -3,7 +3,6 @@ package handler
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/rroy233/EnterNEU/configs"
 	"github.com/rroy233/EnterNEU/databases"
 	"github.com/rroy233/EnterNEU/utils"
 	"time"
@@ -44,10 +43,9 @@ func APIStatusHandler(c *gin.Context) {
 	res.Status = 0
 	res.Data.ImgUploaded = store.Student.ImgUploaded
 
-	urlPrefix := fmt.Sprintf("%s/%s/%s", configs.Get().General.BaseUrl, token, key)
-	res.Data.Info.CheckUrl = urlPrefix
-	res.Data.Info.StatusUrl = urlPrefix + "/status"
-	res.Data.Info.DeleteUrl = urlPrefix + "/delete"
+	res.Data.Info.CheckUrl = fmt.Sprintf("%s/%s/%s", utils.GetAPIBaseUrl(c), token, key)
+	res.Data.Info.StatusUrl = fmt.Sprintf("%s/#/status/%s/%s", utils.GetFrontEndBaseUrl(c), token, key)
+	res.Data.Info.DeleteUrl = fmt.Sprintf("%s/#/delete/%s/%s", utils.GetFrontEndBaseUrl(c), token, key)
 	res.Data.Info.ExpTime = time.Unix(store.ExpTime, 0).Format("2006-01-02 15:04:05")
 	c.JSON(200, res)
 	return
