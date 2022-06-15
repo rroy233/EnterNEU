@@ -23,3 +23,9 @@ statistics_report:
   v6_51_la: false
   v6_51_la_js1: ''
   v6_51_la_js2: ''
+
+proxy:
+  enabled: false
+  frontend_baseurl: ""
+  api_baseurl: ""
+  header_key: "xxx"

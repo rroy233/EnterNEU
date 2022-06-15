@@ -35,6 +35,12 @@ type ConfigStruct struct {
 		V651LaJs1 string `yaml:"v6_51_la_js1"`
 		V651LaJs2 string `yaml:"v6_51_la_js2"`
 	} `yaml:"statistics_report"`
+	Proxy struct {
+		Enabled         bool   `yaml:"enabled"`
+		FrontendBaseUrl string `yaml:"frontend_baseurl"`
+		ApiBaseUrl      string `yaml:"api_baseurl"`
+		HeaderKey       string `yaml:"header_key"`
+	} `yaml:"proxy"`
 }
 
 var config *ConfigStruct

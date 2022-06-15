@@ -25,9 +25,7 @@ func APITipsHandler(c *gin.Context) {
 	//替换内容
 	//[//]: # (copy right)
 	md = bytes.Replace(md, []byte("https://enterneu.icu"), []byte(configs.Get().General.BaseUrl), -1)
-	if utils.GetHostname() != "enterneu.icu" {
-		md = bytes.Replace(md, []byte(`[//]: # "copy right"`), []byte("------\n> EnterNEU是一款按照[GPL-3.0 license](https://github.com/rroy233/EnterNEU/blob/main/LICENSE)协议开源的软件，完全免费。 © 2022 rroy233"), -1)
-	}
+	md = bytes.Replace(md, []byte(`[//]: # "copy right"`), []byte("------\n> EnterNEU是一款按照[GPL-3.0 license](https://github.com/rroy233/EnterNEU/blob/main/LICENSE)协议开源的软件，完全免费。 © 2022 rroy233"), -1)
 	if configs.Get().TGService.Enabled == true {
 		md = bytes.Replace(md, []byte(`[//]: # "your own bot instance"`), []byte(fmt.Sprintf("https://t.me/%s (本站实例)", configs.Get().TGService.BotUserName)), 1)
 	}
