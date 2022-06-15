@@ -43,7 +43,7 @@ func APIStatusHandler(c *gin.Context) {
 	res.Status = 0
 	res.Data.ImgUploaded = store.Student.ImgUploaded
 
-	res.Data.Info.CheckUrl = fmt.Sprintf("%s/%s/%s", utils.GetAPIBaseUrl(c), token, key)
+	res.Data.Info.CheckUrl = fmt.Sprintf("%s/api/%s/%s", utils.GetAPIBaseUrl(c), token, key)
 	res.Data.Info.StatusUrl = fmt.Sprintf("%s/#/status/%s/%s", utils.GetFrontEndBaseUrl(c), token, key)
 	res.Data.Info.DeleteUrl = fmt.Sprintf("%s/#/delete/%s/%s", utils.GetFrontEndBaseUrl(c), token, key)
 	res.Data.Info.ExpTime = time.Unix(store.ExpTime, 0).Format("2006-01-02 15:04:05")

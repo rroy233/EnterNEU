@@ -235,12 +235,22 @@ func (fs *tgFormSession) sendTicketMsg(update *tgbotapi.Update, token string) {
 
 	keyboard := fs.getTicketInlineKeyboard()
 
-	text := fmt.Sprintf("%s\n%s\n%s\n%s",
-		"#EnterNEU凭证\n",
-		"【token】"+token+"\n【key】"+fs.Form.Key+"\n【过期时间】"+fs.ExpTime+"\n",
-		"e码通页面入口:\n"+fmt.Sprintf("%s/%s/%s", configs.Get().General.BaseUrl, token, fs.Form.Key),
-		"Shadowrocket配置地址:\n"+fmt.Sprintf("%s/%s/%s/shadowrocket", configs.Get().General.BaseUrl, token, fs.Form.Key),
-	)
+	text := ""
+	if configs.Get().Proxy.Enabled == true {
+		text = fmt.Sprintf("%s\n%s\n%s\n\n%s",
+			"#EnterNEU凭证\n",
+			"【token】"+token+"\n【key】"+fs.Form.Key+"\n【过期时间】"+fs.ExpTime+"\n",
+			"【e码通页面入口】\n"+fmt.Sprintf("%s/api/%s/%s", configs.Get().General.BaseUrl, token, fs.Form.Key)+fmt.Sprintf("\n\n(大陆节点)%s/api/%s/%s", configs.Get().Proxy.ApiBaseUrl, token, fs.Form.Key),
+			"【管理面板】\n"+fmt.Sprintf("%s/#/status/%s/%s", configs.Get().General.BaseUrl, token, fs.Form.Key)+fmt.Sprintf("\n\n(大陆节点)%s/#/status/%s/%s", configs.Get().Proxy.FrontendBaseUrl, token, fs.Form.Key),
+		)
+	} else {
+		text = fmt.Sprintf("%s\n%s\n%s\n\n%s",
+			"#EnterNEU凭证\n",
+			"【token】"+token+"\n【key】"+fs.Form.Key+"\n【过期时间】"+fs.ExpTime+"\n",
+			"【e码通页面入口】\n"+fmt.Sprintf("%s/api/%s/%s", configs.Get().General.BaseUrl, token, fs.Form.Key),
+			"【管理面板】\n"+fmt.Sprintf("%s/#/status/%s/%s", configs.Get().General.BaseUrl, token, fs.Form.Key),
+		)
+	}
 
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, text)
 	msg.ReplyMarkup = keyboard
@@ -258,10 +268,6 @@ func (fs *tgFormSession) sendTicketMsg(update *tgbotapi.Update, token string) {
 func (fs *tgFormSession) getTicketInlineKeyboard() tgbotapi.InlineKeyboardMarkup {
 	return tgbotapi.NewInlineKeyboardMarkup(
 		tgbotapi.NewInlineKeyboardRow(
-			tgbotapi.NewInlineKeyboardButtonURL("e码通页面", fmt.Sprintf("%s/%s/%s", configs.Get().General.BaseUrl, fs.Token, fs.Form.Key)),
-			tgbotapi.NewInlineKeyboardButtonURL("管理面板(web)", fmt.Sprintf("%s/#/status/%s/%s", configs.Get().General.BaseUrl, fs.Token, fs.Form.Key)),
-		),
-		tgbotapi.NewInlineKeyboardRow(
 			tgbotapi.NewInlineKeyboardButtonData("Shadowrocket视频教程", fmt.Sprintf("get_video#%s#%s", fs.Token, fs.Form.Key)),
 		),
 		tgbotapi.NewInlineKeyboardRow(
@@ -272,10 +278,6 @@ func (fs *tgFormSession) getTicketInlineKeyboard() tgbotapi.InlineKeyboardMarkup
 
 func getTicketInlineKeyboardNoVideo(token, key string) tgbotapi.InlineKeyboardMarkup {
 	return tgbotapi.NewInlineKeyboardMarkup(
-		tgbotapi.NewInlineKeyboardRow(
-			tgbotapi.NewInlineKeyboardButtonURL("e码通页面", fmt.Sprintf("%s/%s/%s", configs.Get().General.BaseUrl, token, key)),
-			tgbotapi.NewInlineKeyboardButtonURL("管理面板(web)", fmt.Sprintf("%s/#/status/%s/%s", configs.Get().General.BaseUrl, token, key)),
-		),
 		tgbotapi.NewInlineKeyboardRow(
 			tgbotapi.NewInlineKeyboardButtonData("删除", fmt.Sprintf("del#%s#%s", token, key)),
 		),
