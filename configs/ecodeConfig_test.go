@@ -8,7 +8,7 @@ func TestGetECodeConst(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if cst.CodeTypeIDByText["禁止出校"] == "8" {
+	if cst.CodeTypeIndexByText["禁止出校"] == "8" {
 		t.Log("ok")
 	}
 }

@@ -79,11 +79,11 @@ func formHandler(update *tgbotapi.Update) {
 			sendPlainText(update, "读取e-code配置文件失败")
 			return
 		}
-		if ecc.CodeTypeIDByText[text] == "" {
+		if ecc.CodeTypeIndexByText[text] == "" {
 			sendPlainText(update, "提示文本无效,请重新选择", entityBold("提示文本无效,请重新选择", "提示文本"))
 			return
 		}
-		session.Form.CodeType = ecc.CodeTypeIDByText[text]
+		session.Form.CodeType = ecc.CodeTypeIndexByText[text]
 		session.setStep(stepFormActualVehicle)
 		_ = session.save()
 		hint := "请选择(小键盘上的)方向:"

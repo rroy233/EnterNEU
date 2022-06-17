@@ -14,12 +14,20 @@ func Register(engine *gin.Engine) {
 		eCodeGroup.Static("/js", "./assets/ecode/js")
 		eCodeGroup.Static("/css", "./assets/ecode/css")
 		eCodeGroup.Static("/fonts", "./assets/ecode/fonts")
+		eCodeGroup.Static("/img", "./assets/ecode/img")
 
 		eCodeGroup.GET("/", handler.ECodeIndexHandler)
 
 		eCodeGroup.GET("/api/user-info", handler.ECodeAPIUserInfo)
 		eCodeGroup.GET("/api/register", handler.ECodeAPIRegister)
 		eCodeGroup.GET("/api/user-face", handler.ECodeAPIUserFace)
+
+		eCodeGroup.GET("/api/qr-code", handler.ECodeAPIQrCodeHandler)
+		eCodeGroup.GET("/api/person-health", handler.ECodeAPIPersonHealthHandler)
+		eCodeGroup.GET("/api/user-priority", handler.ECodeAPIUserPriorityHandler)
+		eCodeGroup.GET("/api/user-vaccination", handler.ECodeAPIUserVaccinationHandler)
+		eCodeGroup.GET("/api/user-examination", handler.ECodeAPIUserExaminationHandler)
+
 	}
 
 	//fuckNeu
