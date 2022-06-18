@@ -7,8 +7,15 @@ import (
 )
 
 func Register(engine *gin.Engine) {
+
+	//上传文件大小限制
+	engine.MaxMultipartMemory = 1 << 20 // 1 MiB
+
+	engine.Use(middlewares.CorsMiddleware)
+
 	//e马桶
 	eCodeGroup := engine.Group("/ecode")
+	eCodeGroup.Use(middlewares.CacheMiddleware)
 	eCodeGroup.Use(middlewares.ECodeMiddleWare)
 	{
 		eCodeGroup.Static("/js", "./assets/ecode/js")

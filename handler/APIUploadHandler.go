@@ -41,6 +41,14 @@ func APIUploadHandler(c *gin.Context) {
 		utils.ReturnMsgJson(c, -1, fmt.Sprintf("文件上传失败(%s)", err.Error()))
 		return
 	}
+
+	//文件大小
+	sizeLimit := int64(configs.MaxUploadSize)
+	if file.Size > sizeLimit {
+		utils.ReturnMsgJson(c, -1, "文件大小超过规定值")
+		return
+	}
+
 	contentType := file.Header.Values("Content-Type")[0]
 
 	//安全检查

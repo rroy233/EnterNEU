@@ -207,6 +207,9 @@ func (fs *tgFormSession) storeImg(update *tgbotapi.Update) error {
 	}
 
 	imgIndex := len(update.Message.Photo) - 1 //原图
+	if update.Message.Photo[imgIndex].FileSize > configs.MaxUploadSize {
+		return errors.New("图片大小超过1MB")
+	}
 	remoteFile, err := bot.GetFile(tgbotapi.FileConfig{
 		FileID: update.Message.Photo[imgIndex].FileID,
 	})
