@@ -36,6 +36,10 @@ type ApiStoreResp struct {
 }
 
 func APIStoreHandler(c *gin.Context) {
+	if configs.Get().General.WebEnabled == false {
+		utils.ReturnMsgJson(c, -1, "生成失败")
+		return
+	}
 	form := new(ApiStoreReq)
 	err := c.ShouldBindJSON(form)
 	if err != nil {

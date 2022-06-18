@@ -15,7 +15,6 @@ func Register(engine *gin.Engine) {
 
 	//e马桶
 	eCodeGroup := engine.Group("/ecode")
-	eCodeGroup.Use(middlewares.CacheMiddleware)
 	eCodeGroup.Use(middlewares.ECodeMiddleWare)
 	{
 		eCodeGroup.Static("/js", "./assets/ecode/js")

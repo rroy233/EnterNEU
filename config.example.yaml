@@ -9,6 +9,7 @@ general:
 tgService:
   enabled: false
   botToken: ""
+  botUserName: ""
   adminUID: 0
   handleWorkerNum: 1
   msgSenderNum: 5
