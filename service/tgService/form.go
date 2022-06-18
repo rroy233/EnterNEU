@@ -20,7 +20,7 @@ func formHandler(update *tgbotapi.Update) {
 	text := update.Message.Text
 	if session.Step == stepFormDecideUpload {
 		if text == "上传头像" {
-			clearKeyboard(update, "请以图片方式发送您的头像:(图片不宜过大)")
+			clearKeyboard(update, "请以图片方式发送您的头像:(大小不超过1MB)")
 			_ = session.setStep(stepFormUpload).save()
 			return
 		} else {
@@ -37,7 +37,7 @@ func formHandler(update *tgbotapi.Update) {
 			}
 			session.setStep(stepFormFinished)
 		} else {
-			sendPlainText(update, "请以图片方式发送您的头像:(图片不宜过大)")
+			sendPlainText(update, "请以图片方式发送您的头像:(大小不超过1MB)")
 			return
 		}
 	}

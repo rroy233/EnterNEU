@@ -45,6 +45,8 @@ type ConfigStruct struct {
 
 var config *ConfigStruct
 
+const MaxUploadSize = 1 << 20 //1MiB
+
 func InitConfig(path string) {
 	config = new(ConfigStruct)
 	confFile, err := ioutil.ReadFile(path)
