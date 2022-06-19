@@ -12,6 +12,7 @@ func Register(engine *gin.Engine) {
 	engine.MaxMultipartMemory = 1 << 20 // 1 MiB
 
 	engine.Use(middlewares.CorsMiddleware)
+	engine.Use(middlewares.CacheMiddleware)
 
 	//e马桶
 	eCodeGroup := engine.Group("/ecode")
