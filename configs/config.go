@@ -9,12 +9,14 @@ import (
 
 type ConfigStruct struct {
 	General struct {
-		Production bool   `yaml:"production"`
-		WebEnabled bool   `yaml:"web_enabled"`
-		BaseUrl    string `yaml:"baseUrl"`
-		ListenPort string `yaml:"listenPort"`
-		AesIv      string `yaml:"aesIv"`
-		Md5Salt    string `yaml:"md5Salt"`
+		Production       bool   `yaml:"production"`
+		WebEnabled       bool   `yaml:"web_enabled"`
+		BaseUrl          string `yaml:"baseUrl"`
+		ListenPort       string `yaml:"listenPort"`
+		AesIv            string `yaml:"aesIv"`
+		Md5Salt          string `yaml:"md5Salt"`
+		AutoDetectUpdate bool   `yaml:"autoDetectUpdate"`
+		AutoDetectTime   string `yaml:"autoDetectTime"`
 	} `yaml:"general"`
 	TGService struct {
 		Enabled         bool   `yaml:"enabled"`
@@ -57,6 +59,12 @@ func InitConfig(path string) {
 	if err != nil {
 		log.Fatalln("配置文件加载失败！(" + err.Error() + ")")
 	}
+
+	//检查项
+	if config.General.AutoDetectUpdate == true && config.TGService.Enabled == false {
+		log.Fatalln("自动检测更新需要开启[TG服务]，并填写好管理员uid。")
+	}
+
 	return
 }
 

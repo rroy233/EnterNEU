@@ -5,6 +5,8 @@ general:
   listenPort: "8994"
   aesIv: "16byteaesiv11111"
   md5Salt: "someMd5Salt"
+  autoDetectUpdate: false
+  autoDetectTime: "8:00|9:00|10:00"
 
 tgService:
   enabled: false

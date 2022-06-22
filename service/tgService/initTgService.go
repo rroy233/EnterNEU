@@ -31,7 +31,6 @@ func InitTgService() {
 	if err != nil {
 		logger.FATAL.Fatalln(loggerPrefix + err.Error())
 	}
-
 	//初始化许可名单
 	databases.InitTGAllow()
 
