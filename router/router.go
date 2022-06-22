@@ -46,9 +46,6 @@ func Register(engine *gin.Engine) {
 		apiGroup.GET("/:token/:key", handler.TokenCheckHandler)
 		apiGroup.GET("/:token/:key/shadowrocket", handler.TokenShadowrocketHandler)
 
-		//头像预览
-		apiGroup.GET("/viewImage", handler.APIViewImageHandler)
-
 		//获取说明MarkDown
 		apiGroup.GET("/tips", handler.APITipsHandler)
 
@@ -66,6 +63,7 @@ func Register(engine *gin.Engine) {
 
 		//获取存储的信息
 		apiGroup.GET("/:token/:key/status", handler.APIStatusHandler)
+
 		//获取存储的信息
 		apiGroup.POST("/:token/:key/delete", handler.APIDeleteHandler)
 	}
