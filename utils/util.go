@@ -56,6 +56,19 @@ func LogGetIP(param *gin.LogFormatterParams) string {
 	}
 }
 
+func LogGetPath(param *gin.LogFormatterParams) string {
+	part := strings.Split(param.Path[1:], "/")
+	path := ""
+	if len(part) >= 3 && len(part[1]) == 10 && len(part[2]) == 32 { //包含token和key
+		part[1] = part[1][:5] + strings.Repeat("*", 10-5)
+		part[2] = part[2][:10] + strings.Repeat("*", 32-10)
+		path = "/" + strings.Join(part, "/")
+	} else {
+		path = param.Path
+	}
+	return path
+}
+
 func NewUUIDToken() string {
 	u, _ := uuid.NewUUID()
 	return strings.Replace(u.String(), "-", "", -1)
