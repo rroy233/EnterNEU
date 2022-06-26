@@ -30,11 +30,11 @@ func main() {
 	}
 	r.Use(gin.LoggerWithConfig(gin.LoggerConfig{
 		Formatter: func(param gin.LogFormatterParams) string {
-			return fmt.Sprintf("[%s]- %s - \"%s %s %d %s \"%s\" %s\"\n",
+			return fmt.Sprintf("[%s]- %s - \"%s %s %s %d %s \"%s\" %s\"\n",
 				param.TimeStamp.Format("2006-01-02 15:04:05"),
 				utils.LogGetIP(&param),
 				param.Method,
-				//param.Path,
+				utils.LogGetPath(&param),
 				param.Request.Proto,
 				param.StatusCode,
 				param.Latency,
