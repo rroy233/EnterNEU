@@ -34,6 +34,24 @@ func sendPlainText(update *tgbotapi.Update, text string, entity ...tgbotapi.Mess
 	}
 }
 
+func sendImg(update *tgbotapi.Update, fileData []byte) (msgSent tgbotapi.Message) {
+	if update.Message == nil {
+		return
+	}
+	var msg tgbotapi.PhotoConfig
+	file := tgbotapi.FileBytes{
+		Name:  "image.jpg",
+		Bytes: fileData,
+	}
+	if update.Message != nil {
+		msg = tgbotapi.NewPhoto(update.Message.Chat.ID, file)
+	} else if update.CallbackQuery != nil || update.CallbackQuery.Message != nil {
+		msg = tgbotapi.NewPhoto(update.CallbackQuery.Message.Chat.ID, file)
+	}
+	smsg, _ := bot.Send(msg)
+	return smsg
+}
+
 func sendSticker(update *tgbotapi.Update, fileID string) {
 	if update.Message == nil {
 		return

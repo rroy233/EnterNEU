@@ -5,7 +5,9 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/rroy233/EnterNEU/configs"
 	"github.com/rroy233/EnterNEU/logger"
+	"github.com/rroy233/EnterNEU/service/captcha"
 	"github.com/rroy233/EnterNEU/utils"
+	"strings"
 	"time"
 )
 
@@ -46,8 +48,35 @@ func formHandler(update *tgbotapi.Update) {
 	case stepStarted:
 		session.Form.Key = utils.NewUUIDToken()
 		session.Form.KeyMD5 = utils.MD5Short(session.Form.Key + configs.Get().General.Md5Salt)
-		session.setStep(stepFormName)
 		clearKeyboard(update, "开始")
+
+		//生成验证码
+		img, err := captcha.Create()
+		if err != nil {
+			logger.Error.Println(loggerPrefix + "生成验证码失败:" + err.Error())
+			sendPlainText(update, "生成验证码失败")
+			return
+		}
+		//发送和存储
+		session.Captcha = img
+		smsg := sendImg(update, img.Img)
+		if smsg.MessageID == 0 {
+			logger.Error.Println(loggerPrefix + "发送验证码失败:" + err.Error())
+			sendPlainText(update, "发送验证码失败")
+			return
+		}
+		session.Captcha.MsgID = smsg.MessageID
+		session.setStep(stepCaptcha)
+		_ = session.save()
+		sendPlainText(update, "请输入验证码:\n（使用 /captcha 重新生成验证码，使用 /cancel 取消）")
+	case stepCaptcha:
+		//验证验证码
+		if len(text) != 4 || strings.ToLower(text) != strings.ToLower(session.Captcha.Text) {
+			sendPlainText(update, "验证码错误\n（使用 /captcha 重新生成验证码，使用 /cancel 取消）")
+			return
+		}
+
+		session.setStep(stepFormName)
 		_ = session.save()
 		sendPlainText(update, "已为您随机生成秘钥:\n"+session.Form.Key)
 		time.Sleep(200 * time.Millisecond)

@@ -8,6 +8,7 @@ import (
 	"github.com/rroy233/EnterNEU/configs"
 	"github.com/rroy233/EnterNEU/databases"
 	"github.com/rroy233/EnterNEU/logger"
+	"github.com/rroy233/EnterNEU/service/captcha"
 	"github.com/rroy233/EnterNEU/utils"
 	"io/ioutil"
 	"log"
@@ -22,6 +23,7 @@ var sessionExpTime = time.Minute * 5
 //一次创建凭证的过程中，用户当前处在的状态
 const (
 	stepStarted = sessionStep(iota)
+	stepCaptcha
 	stepFormName
 	stepFormStuID
 	stepFormEntranceName
@@ -56,10 +58,11 @@ type tgFormSession struct {
 		ActualVehicle string `json:"actualVehicle"`
 		ExpTimeType   int    `json:"expTimeType"`
 	} `json:"form"`
-	ImgUploaded    bool   `json:"ImgUploaded"`
-	TmpFilePath    string `json:"tmpFilePath"`
-	ImgContentType string `json:"ImgContentType"`
-	ExpTime        string `json:"expTime"`
+	ImgUploaded    bool               `json:"ImgUploaded"`
+	TmpFilePath    string             `json:"tmpFilePath"`
+	ImgContentType string             `json:"ImgContentType"`
+	ExpTime        string             `json:"expTime"`
+	Captcha        captcha.CaptchaRes `json:"captcha"`
 }
 
 func getFormSession(UID int64) (*tgFormSession, error) {
