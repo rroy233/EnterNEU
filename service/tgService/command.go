@@ -5,6 +5,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/rroy233/EnterNEU/databases"
 	"github.com/rroy233/EnterNEU/logger"
+	"github.com/rroy233/EnterNEU/service/captcha"
 	"strconv"
 	"strings"
 )
@@ -70,6 +71,45 @@ func commandNew(update *tgbotapi.Update) {
 	return
 }
 
+func commandCaptcha(update *tgbotapi.Update) {
+	session, _ := getFormSession(update.Message.From.ID)
+	if session != nil {
+		if session.Step != stepCaptcha {
+			sendPlainText(update, "当前无法使用该命令")
+			return
+		}
+
+		//删除命令消息
+		addToSendQueue(tgbotapi.NewDeleteMessage(update.Message.Chat.ID, update.Message.MessageID))
+
+		//删除
+		addToSendQueue(tgbotapi.NewDeleteMessage(update.Message.Chat.ID, session.Captcha.MsgID))
+
+		//生成新的
+		//生成验证码并存储如session中
+		img, err := captcha.Create()
+		if err != nil {
+			logger.Error.Println(loggerPrefix + "生成验证码失败:" + err.Error())
+			sendPlainText(update, "生成验证码失败")
+			return
+		}
+		session.Captcha = img
+
+		//发送
+		smsg := sendImg(update, img.Img)
+		if smsg.MessageID == 0 {
+			logger.Error.Println(loggerPrefix + "发送验证码失败:" + err.Error())
+			sendPlainText(update, "发送验证码失败")
+			return
+		}
+		session.Captcha.MsgID = smsg.MessageID
+		_ = session.save()
+	} else {
+		sendPlainText(update, "您没有活跃中的会话")
+		return
+	}
+}
+
 func commandAddPermission(update *tgbotapi.Update) {
 	if update.Message.Text == "/add" || len(strings.Split(update.Message.Text, " ")) < 2 {
 		text := "该功能允许所有已授权的用户使用\n【授权原则】\n仅允许授权给东大学生!!!\n请务必严格验证其身份。\n\n请按照下面的格式进行发送:\n /add <UID> (如/add 123)"
@@ -103,7 +143,6 @@ func commandAddPermission(update *tgbotapi.Update) {
 		return
 	}
 	logger.Info.Printf("%s%s已添加用户:%d@%s", loggerPrefix, getLogPrefixMessage(update), chat.ID, chat.UserName)
-	logger.Debug.Println(chat)
 
 	//给该用户推送通知
 	msg := tgbotapi.NewMessage(chat.ID, fmt.Sprintf(

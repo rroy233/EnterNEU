@@ -77,6 +77,8 @@ func router(update tgbotapi.Update) {
 				commandRemovePermission(&update)
 			case "list":
 				commandListPermission(&update)
+			case "captcha":
+				commandCaptcha(&update)
 			default:
 				sendPlainText(&update, "命令不存在")
 				return

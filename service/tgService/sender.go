@@ -23,7 +23,7 @@ func sender() {
 	for {
 		rl.Take()
 		msg, _ := <-msgQueue
-		_, err := bot.Send(msg)
+		_, err := bot.Request(msg)
 		if err != nil {
 			logger.Error.Println(loggerPrefix + "[sender]" + err.Error())
 		}
